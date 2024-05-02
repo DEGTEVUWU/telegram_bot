@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.List;
-
-public record ChatCompletionObject (
-    @JsonProperty("choices") List<Choice> choices
+public record Message (
+    @JsonProperty("role") String role,
+    @JsonProperty("content") String content
 ) {}
+

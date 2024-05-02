@@ -9,6 +9,7 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.BotOptions;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
+import tg_bot.telegram_bot.openAI.OpenAIClient;
 
 @Configuration
 public class TelegramBotConfiguration {
@@ -17,10 +18,11 @@ public class TelegramBotConfiguration {
     @SneakyThrows
     public TelegramBot telegramBot(
             @Value("${bot.token}")String botToken,
-            TelegramBotsApi telegrambotsApi
+            TelegramBotsApi telegrambotsApi,
+            OpenAIClient openAIClient
     ) {
         var botOptions = new DefaultBotOptions();
-        var firstBot = new TelegramBot(botOptions, botToken);
+        var firstBot = new TelegramBot(botOptions, botToken, openAIClient);
         telegrambotsApi.registerBot(firstBot);
         return firstBot;
     }
