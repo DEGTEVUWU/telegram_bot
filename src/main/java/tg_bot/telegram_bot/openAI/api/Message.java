@@ -1,9 +1,9 @@
-package tg_bot.telegram_bot.openAI;
+package tg_bot.telegram_bot.openAI.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
 
+@Builder
 public record Message (
     @JsonProperty("role") String role,
     @JsonProperty("content") String content

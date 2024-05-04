@@ -6,10 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.meta.generics.BotOptions;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
-import tg_bot.telegram_bot.openAI.OpenAIClient;
+import tg_bot.telegram_bot.openAI.ChatGPTService;
 
 @Configuration
 public class TelegramBotConfiguration {
@@ -19,10 +17,10 @@ public class TelegramBotConfiguration {
     public TelegramBot telegramBot(
             @Value("${bot.token}")String botToken,
             TelegramBotsApi telegrambotsApi,
-            OpenAIClient openAIClient
+            ChatGPTService gptService
     ) {
         var botOptions = new DefaultBotOptions();
-        var firstBot = new TelegramBot(botOptions, botToken, openAIClient);
+        var firstBot = new TelegramBot(botOptions, botToken, gptService);
         telegrambotsApi.registerBot(firstBot);
         return firstBot;
     }
