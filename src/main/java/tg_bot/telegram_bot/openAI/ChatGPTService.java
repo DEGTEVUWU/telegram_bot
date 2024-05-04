@@ -7,13 +7,11 @@ import tg_bot.telegram_bot.openAI.api.ChatCompletionRequest;
 import tg_bot.telegram_bot.openAI.api.Message;
 import tg_bot.telegram_bot.openAI.api.OpenAIClient;
 
-import java.util.List;
-
 @AllArgsConstructor
 @Service
 public class ChatGPTService {
     private final OpenAIClient openAIClient;
-    private final ChatGptHistory chatGptHistory;
+    private final ChatGptHistoryService chatGptHistoryService;
 
     @Nonnull
     public String getResponseChatForUser(
@@ -21,9 +19,9 @@ public class ChatGPTService {
             String userTextInput
     ) {
 
-        chatGptHistory.createHistoryIfNotExist(userId);
+        chatGptHistoryService.createHistoryIfNotExist(userId);
 
-        var history = chatGptHistory.addMessageToHistory(
+        var history = chatGptHistoryService.addMessageToHistory(
                 userId,
                 Message.builder()
                     .content(userTextInput)
@@ -39,7 +37,7 @@ public class ChatGPTService {
         var response = openAIClient.createChatCompletion(request);
         var messageFromGpt = response.choices().get(0).message();
 
-        chatGptHistory.addMessageToHistory(userId, messageFromGpt);
+        chatGptHistoryService.addMessageToHistory(userId, messageFromGpt);
 
         return messageFromGpt.content();
     }

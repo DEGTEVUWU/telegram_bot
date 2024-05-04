@@ -14,20 +14,12 @@ public class TelegramBotConfiguration {
 
     @Bean
     @SneakyThrows
-    public TelegramBot telegramBot(
-            @Value("${bot.token}")String botToken,
-            TelegramBotsApi telegrambotsApi,
-            ChatGPTService gptService
+    public TelegramBotsApi telegramBotsApi(
+            TelegramBot telegramBot
     ) {
-        var botOptions = new DefaultBotOptions();
-        var firstBot = new TelegramBot(botOptions, botToken, gptService);
-        telegrambotsApi.registerBot(firstBot);
-        return firstBot;
-    }
+        var telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
+        telegramBotsApi.registerBot(telegramBot);
+        return telegramBotsApi;
 
-    @Bean
-    @SneakyThrows
-    public TelegramBotsApi telegramBotsApi() {
-        return new TelegramBotsApi(DefaultBotSession.class);
     }
 }
