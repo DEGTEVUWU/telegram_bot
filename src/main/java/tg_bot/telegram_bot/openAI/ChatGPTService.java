@@ -30,7 +30,7 @@ public class ChatGPTService {
         );
 
         var request = ChatCompletionRequest.builder()
-                .model("gpt-3")
+                .model("gpt-3.5-turbo")
                 .messages(history.chatMessage())
                 .build();
 
